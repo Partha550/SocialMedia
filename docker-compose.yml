@@ -1,0 +1,51 @@
+services:
+  webapp:
+    build: 
+      context: ./backend
+    volumes:
+      - ./backend:/app
+      - static_files:/app/staticfiles:rw
+    # ports:
+    #   - 8000:8000
+    image: webapp:social
+    container_name: social_app
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    depends_on:
+      - db
+
+  db:
+    build: ./dbdata
+    volumes:
+      - ./dbdata/data/:/var/lib/postgresql/data
+    # ports:
+    #   - 5432:5432
+    image: database:social
+    container_name: social_db
+
+  migration:
+    image: webapp:social
+    container_name: midcontainer
+    command: bash -c "
+      python manage.py migrate --noinput &&
+      python manage.py collectstatic --noinput
+      "
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+
+  nginx:
+    container_name: webserver
+    build:
+      context: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/html/:/etc/nginx/html/
+      - static_files:/home/app/staticfiles:rw
+    depends_on:
+      - webapp
+
+volumes:
+  static_files:
