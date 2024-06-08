@@ -1,6 +1,6 @@
 services:
   webapp:
-    build: 
+    build:
       context: ./backend
     volumes:
       - ./backend:/app
@@ -10,17 +10,29 @@ services:
     image: webapp:social
     container_name: social_app
     command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    healthcheck:
+      test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthcheck/').status" || exit 1
+      interval: 4s
+      timeout: 3s
+      retries: 3
+      start_period: 6s
     depends_on:
       - db
 
   db:
-    build: ./dbdata
+    build:
+      context: ./dbdata
     volumes:
       - ./dbdata/data/:/var/lib/postgresql/data
     # ports:
     #   - 5432:5432
     image: database:social
     container_name: social_db
+    healthcheck:
+      test: pg_isready -U parthasamanta -d social
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
   migration:
     image: webapp:social
@@ -44,6 +56,12 @@ services:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - ./nginx/html/:/etc/nginx/html/
       - static_files:/home/app/staticfiles:rw
+    healthcheck:
+      test: service nginx status || exit 1
+      interval: 4s
+      timeout: 3s
+      retries: 3
+      start_period: 6s
     depends_on:
       - webapp
 
