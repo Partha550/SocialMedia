@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-gu_v1%p*0^%$t_%$h%mk1chj3l01i545f9ny!^y128!s72&0xv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,22 +81,22 @@ WSGI_APPLICATION = "social.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 #  DATABASES = {
 #      "default": {
-#          "ENGINE": "django.db.backends.postgresql",
-#          "NAME": "social",
-#          "USER": "parthasamanta",
-#          "PASSWORD": "12098",
-#          "HOST": "db",
-#          "PORT": "5432",
+#          "ENGINE": "django.db.backends.sqlite3",
+#          "NAME": BASE_DIR / "db.sqlite3",
 #      }
 #  }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "social",
+        "USER": "parthasamanta",
+        "PASSWORD": "12098",
+        "HOST": "db",
+        "PORT": "5432",
+    }
+}
 
 
 # Password validation
