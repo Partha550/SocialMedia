@@ -89,7 +89,6 @@ class ListFriends(generics.ListAPIView):
 class SearchFriends(generics.ListAPIView):
     serializer_class = FriendSearchSerializer
     permission_classes = [permissions.IsAuthenticated]
-    pagination_class = None
 
     def get_queryset(self):
         word = self.request.query_params.get("q", "")
