@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>A Library Management Web Application</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+  <h1 id="an-library-management-web-application">An Library Management Web Application </h1>
+  <h1>Created By: <a href="https://www.linkedin.com/in/partha550/" target="_blank">Partha Pratim Samanta</a></h1>
+  <h2 id="summary-of-this-project">Summary of this project:</h2>
+  <h3 id="scenario">Scenario</h3>
+  <p>The are two roles in the system; <code>LIBRARIAN</code> and <code>MEMBER</code></p>
+  <h3 id="as-a-user">As a User</h3>
+  <ul>
+    <li>I can signup either as <code>LIBRARIAN</code> and <code>MEMBER</code> using username and password</li>
+    <li>I can login using username/password</li>
+  </ul>
+  <h4 id="as-a-librarian">As a Librarian</h4>
+  <ul>
+    <li>I can add, update, and remove Books from the system</li>
+    <li>I can add, update, view, and remove Member from the system</li>
+  </ul>
+  <h4 id="as-a-member">As a Member</h4>
+  <ul>
+    <li>I can view, borrow, and return available Books</li>
+    <li>Once a book is borrowed, its status will change to <code>BORROWED</code></li>
+    <li>Once a book is returned, its status will change to <code>AVAILABLE</code></li>
+    <li>I can delete my own account<h2 id="testing-process">Testing Process</h2>
+    </li>
+  </ul>
+  <h3 id="librarian">Librarian:</h3>
+  <ul>
+    <li><a href="http://139.144.1.21/staff/register">Sign UP as Librarian (Staff)</a>
+      <ul>
+        <li>Method: <code>POST</code></li>
+        <li>Sample POST Data:
+          <pre><code class="language-json">  {
+    &quot;name&quot;: &quot;Your Name/username&quot;,
+    &quot;password&quot;: &quot;Your password&quot;
+  }
+</code></pre>
+        </li>
+      </ul>
+    </li>
+    <li><a href="http://139.144.1.21/staff/login">Sign In as Librarian (Staff)</a>
+      <ul>
+        <li>Method: <code>POST</code></li>
+        <li>Content (Credential):
+          <pre><code class="language-json">  {
+    &quot;name&quot;: &quot;Your Name/username&quot;,
+    &quot;password&quot;: &quot;Your password&quot;
+  }
+</code></pre>
+          <br />
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <h2 id="books">Books:</h2>
+  <ul>
+    <li>
+      <p><a href="http://139.144.1.21/book/lists">See list of all available books</a></p>
+      <ul>
+        <li>Login Required: <code>Staff/Member</code></li>
+        <li>Method: <code>GET</code></li>
+      </ul>
+    </li>
+    <li>
+      <p><a href="http://139.144.1.21/book/add">Add a new book</a></p>
+      <ul>
+        <li>Login Required: <code>Staff</code></li>
+        <li>Method: <code>POST</code>
+          <pre><code class="language-json">{
+&quot;name&quot;: &quot;Name of the Book!&quot;
+}
+</code></pre>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <p><a href="http://139.144.1.21/book/update/%3Cbook_id%3E">Update an existing book</a></p>
+      <ul>
+        <li>Login Required: <code>Staff</code></li>
+        <li>Method: <code>POST</code></li>
+        <li><em>replace <code>&lt;book_id&gt;</code> with a valid integer in the URL</em></li>
+        <li>Sample POST Data:
+          <pre><code class="language-json">  {
+    &quot;name&quot;: &quot;Name of the Book!&quot;,
+    &quot;status&quot;: &quot;BORROWED&quot;,
+    &quot;borrower&quot;: 102
+  }
+</code></pre>
+        </li>
+        <li>borrower must be a valid member id.</li>
+      </ul>
+    </li>
+    <li>
+      <p><a href="http://139.144.1.21/book/delete/%3Cbook_id%3E">Delete a book</a></p>
+      <ul>
+        <li>Login Required: <code>Staff</code></li>
+        <li>Method: <code>POST</code></li>
+        <li><em>replace <code>&lt;book_id&gt;</code> with a valid integer in the URL</em></li>
+      </ul>
+      <br />
+    </li>
+  </ul>
+  <h2 id="member">Member:</h2>
+  <ul>
+    <li>
+      <p><a href="http://139.144.1.21/member/register">Sign Up as a Member</a></p>
+      <ul>
+        <li>Method: <code>POST</code></li>
+        <li>Sample POST Data:
+          <pre><code class="language-json">  {
+    &quot;name&quot;: &quot;Name of  the Member&quot;,
+    &quot;password&quot;: &quot;Password of the Member&quot;
+  }
+</code></pre>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <p><a href="http://139.144.1.21/member/login">Log In as a Member</a></p>
+      <ul>
+        <li>Method: <code>POST</code></li>
+        <li>Sample POST Data:
+          <pre><code class="language-json">  {
+    &quot;name&quot;: &quot;Name of  the Member&quot;,
+    &quot;password&quot;: &quot;Password of the Member&quot;
+  }
+</code></pre>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <p><a href="http://139.144.1.21/member/lists">View list of all members</a></p>
+      <ul>
+        <li>Login Required: <code>Staff</code></li>
+        <li>Method: <code>GET</code></li>
+      </ul>
+    </li>
+    <li>
+      <p><a href="http://139.144.1.21/member/create">Add a new member</a></p>
+      <ul>
+        <li>Login Required: <code>Staff</code></li>
+        <li>Method: <code>POST</code></li>
+        <li>Sample POST Data:
+          <pre><code class="language-json">  {
+    &quot;name&quot;: &quot;Member Ten&quot;,
+    &quot;password&quot;: &quot;memberten&quot;
+  }
+</code></pre>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <p><a href="http://139.144.1.21/member/update/%3Cmember_id%3E">Update Member</a> <br> &nbsp; &nbsp; &nbsp; Login Required: <code>Staff</code><br> &nbsp; &nbsp; &nbsp; Method: <code>POST</code></p>
+      <ul>
+        <li><em>replace <code>&lt;member_id&gt;</code> with a valid integer in the URL</em></li>
+        <li>Sample POST Data:
+          <pre><code class="language-json">  {
+    &quot;name&quot;: &quot;Member Ten Updated&quot;
+    &quot;password&quot;: &quot;membertenupdt&quot;
+  }
+</code></pre>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <p><a href="http://139.144.1.21/member/delete/%3Cmember_id%3E">Delete Member</a> <br> &nbsp; &nbsp; &nbsp; Login Required: <code>Staff/Member</code><br> &nbsp; &nbsp; &nbsp; Method: <code>POST</code></p>
+      <ul>
+        <li><em>replace <code>&lt;member_id&gt;</code> with a valid integer in the URL</em></li>
+        <li>if login as staff: can delete any member.</li>
+        <li>if login as member: can delete only his account.</li>
+      </ul>
+    </li>
+    <li>
+      <p><a href="http://139.144.1.21/member/borrow/%3Cbook_id%3E">Borrow a book</a> <br> &nbsp; &nbsp; &nbsp; Login Required: <code>Member</code><br> &nbsp; &nbsp; &nbsp; Method: <code>POST</code></p>
+      <ul>
+        <li>can&#39;t be borrowed if already done</li>
+        <li><em>replace <code>&lt;book_id&gt;</code> with a valid integer in the URL</em></li>
+      </ul>
+    </li>
+    <li>
+      <p><a href="http://139.144.1.21/member/return/%3Cbook_id%3E">Return a book</a> <br> &nbsp; &nbsp; &nbsp; Login Required: <code>Member</code><br> &nbsp; &nbsp; &nbsp; Method: <code>POST</code></p>
+      <ul>
+        <li>can&#39;t be returned if not borrowed or borrowed by someine else.</li>
+        <li><em>replace <code>&lt;book_id&gt;</code> with a valid integer in the URL</em></li>
+      </ul>
+    </li>
+  </ul>
+
+
+</body>
+
+</html>
